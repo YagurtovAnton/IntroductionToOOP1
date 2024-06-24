@@ -76,16 +76,11 @@ public:
 
 String operator+(const String& left, const String& right)
 {
-	cout << delimiter << endl;
-	cout << "Operator + " << endl;
 	String buffer(left.get_size() + right.get_size() - 1);
-	buffer.print();
 	for (int i = 0; i < left.get_size(); i++)
-		buffer[i] = left[i];
-	//buffer.get_str()[i] = left.get_str()[i];
+	buffer.get_str()[i] = left.get_str()[i];
 	for (int i = 0; i < right.get_size(); i++)
-		buffer[i + left.get_size() - 1] = right[i];
-	//buffer.get_str()[i + left.get_size() - 1] = right.get_str()[i];
+	buffer.get_str()[i + left.get_size() - 1] = right.get_str()[i];
 	return buffer;
 }
 
@@ -97,11 +92,10 @@ std::ostream& operator<<(std::ostream& os, const String& obj)
 void main()
 {
 
-	String str3 = "Hello";
-	str3 = str3;
+	String str3 = "Hello ";
 	str3.print();
 
-	String str4 = "World";
+	String str4 = "World ";
 	str4.print();
 
 	cout << str3 << endl;
