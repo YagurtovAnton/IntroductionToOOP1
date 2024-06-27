@@ -23,13 +23,14 @@ public:
 
 
 	//					Constructors:
-	explicit String(int size = 80)
+	explicit String(int size = 80): size(size), str(new char[size]{})
 	{
-		this->size = size;
-		this->str = new char[size] {};
+		//this->size = size;
+		//this->str = new char[size] {};
 		cout << "Constructor:\t" << this << endl;
 	}
-	String(const char str[])
+
+	String(const char str[]): size(strlen(str) + 1), str(new char[size] {})
 	{
 		this->size = strlen(str) + 1;
 		//Функция strlen() возвращает размер строки в символах,
@@ -38,7 +39,7 @@ public:
 		for (int i = 0; i < size; i++)this->str[i] = str[i];
 		cout << "Constructor:\t" << this << endl;
 	}
-	String(const String& other)
+	String(const String& other) :size(other.size), str(new char[size] {})
 	{
 		//Deep copy 
 		this->size = other.size;
@@ -46,10 +47,10 @@ public:
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
 		cout << "CopyConstructor:" << this << endl;
 	}
-	String(String&& other)
+	String(String&& other)noexcept:size(other.size), str(other.str)
 	{
-		this->size = other.size;
-		this->str = other.str;
+		//this->size = other.size;
+		//this->str = other.str;
 		other.size=0;
 		other.str=nullptr;
 		cout << "MoveConstructor:"<<this<<endl;
@@ -122,7 +123,7 @@ std::ostream& operator<<(std::ostream& os, const String& obj)
 }
 //#define CONSTRUCTORS_CHECK
 #define OPERATOR_PLUS_CHEK
-
+//#define CALLING_CONSTRUCTORS
 void main()
 {
 
@@ -152,7 +153,7 @@ void main()
 	cout << delimiter << endl;
 	String str3;
 	cout << delimiter << endl;
-	str3=str1 + str2; // тут вызывается MoveContractor
+	str3 = str1 + str2; // тут вызывается MoveContractor
 	cout << delimiter << endl;
 	cout << str3 << endl;
 
@@ -161,5 +162,26 @@ void main()
 
 
 #endif //OPERATOR_PLUS_CHEK
+#ifdef CALLING_CONSTRUCTORS
+	String str1;
+	str1.print();
+
+	String str2(8); //конструктор  эксплисит
+	str2.print();
+
+	String str3 = "hello"; //конструктоор чар
+	str3.print();
+
+	String str4();
+	//str4.print();
+
+	String str5{};
+	str5.print();
+
+	//String str6 = str3;	1вариант 
+	//String str6(str3);	2вариант
+	String str6{str3};//	3вариант
+	str6.print();
+#endif // CALLING_CONSTRUCTORS
 
 }
