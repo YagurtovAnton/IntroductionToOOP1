@@ -40,7 +40,7 @@ public:
 	}
 	String(const String& other)
 	{
-		//Deep copy (Побитовое копирование):
+		//Deep copy 
 		this->size = other.size;
 		this->str = new char[size] {};
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
@@ -70,6 +70,17 @@ public:
 		this->str = new char[size] {};
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
 		cout << "CopyAssignemt:\t" << this << endl;
+		return *this;
+	}
+	String& operator=(String&& other)noexcept
+	{
+		if (this == &other)return *this;
+		delete[]this->str;
+		this->size = other.size;
+		this->str = other.str;
+		other.size = 0;
+		other.str=nullptr;
+		cout << "MoveAssignment: " << this << endl;
 		return *this;
 	}
 	char operator[](int i)const
@@ -137,10 +148,13 @@ void main()
 	String str1 = "Hello ";
 	String str2 = "World ";
 
+	String temp = str1 + str2;
 	cout << delimiter << endl;
-	String str3 = str1 + str2;
+	String str3;
+	cout << delimiter << endl;
+	str3=str1 + str2; // тут вызывается MoveContractor
+	cout << delimiter << endl;
 	cout << str3 << endl;
-	cout << delimiter << endl;
 
 	cout << str1 << endl;
 	cout << str2 << endl;
