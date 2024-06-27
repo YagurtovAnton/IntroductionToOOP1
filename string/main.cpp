@@ -30,7 +30,7 @@ public:
 		cout << "Constructor:\t" << this << endl;
 	}
 
-	String(const char str[]): size(strlen(str) + 1), str(new char[size] {})
+	String(const char str[]): String(strlen(str)+1)
 	{
 		this->size = strlen(str) + 1;
 		//Функция strlen() возвращает размер строки в символах,
@@ -39,12 +39,12 @@ public:
 		for (int i = 0; i < size; i++)this->str[i] = str[i];
 		cout << "Constructor:\t" << this << endl;
 	}
-	String(const String& other) :size(other.size), str(new char[size] {})
+	String(const String& other) :String(other.str)
 	{
 		//Deep copy 
-		this->size = other.size;
-		this->str = new char[size] {};
-		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
+		//this->size = other.size;
+		//this->str = new char[size] {};
+		//for (int i = 0; i < size; i++)this->str[i] = other.str[i];
 		cout << "CopyConstructor:" << this << endl;
 	}
 	String(String&& other)noexcept:size(other.size), str(other.str)
@@ -122,8 +122,8 @@ std::ostream& operator<<(std::ostream& os, const String& obj)
 	return os << obj.get_str();
 }
 //#define CONSTRUCTORS_CHECK
-#define OPERATOR_PLUS_CHEK
-//#define CALLING_CONSTRUCTORS
+//#define OPERATOR_PLUS_CHEK
+#define CALLING_CONSTRUCTORS
 void main()
 {
 
